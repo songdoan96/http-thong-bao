@@ -13,7 +13,7 @@
             padding: 1rem;
         }
 
-        .wrap {
+        #wrap {
             width: 100%;
             display: flex;
             flex-wrap: wrap;
@@ -40,12 +40,23 @@
 </head>
 
 <body>
-    <div class="wrap">
+    <div id="wrap">
         <?php
         for ($i = 1; $i <= 5; $i++) { ?>
             <a class="line" target="_blank" href="chuyen.php?id=<?= $i ?>">Chuyền <?= $i ?></a>
         <?php }
         ?>
+    </div>
+    <div id="list">
+        <ul>
+
+            <?php
+            require_once "DB.php";
+            $list = DB::table('list')->fetchAll();
+            foreach ($list as $l) { ?>
+                <li><?= "Chuyền $l->line : $l->job" ?></li>
+            <?php  }  ?>
+        </ul>
     </div>
 
     <script>
@@ -68,7 +79,7 @@
                                     playDone = true;
                                     setTimeout(() => {
                                         location.reload();
-                                    }, 5000);
+                                    }, 3000);
                                     return;
                                 }
                                 if (index < files.length) {
