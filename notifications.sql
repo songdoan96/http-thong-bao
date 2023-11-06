@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: localhost:3306
--- Thời gian đã tạo: Th10 06, 2023 lúc 04:46 PM
+-- Thời gian đã tạo: Th10 06, 2023 lúc 04:50 PM
 -- Phiên bản máy phục vụ: 8.0.30
 -- Phiên bản PHP: 8.1.10
 
@@ -28,7 +28,6 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `list` (
-  `id` int NOT NULL,
   `line` tinyint NOT NULL,
   `job` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -37,30 +36,10 @@ CREATE TABLE `list` (
 -- Đang đổ dữ liệu cho bảng `list`
 --
 
-INSERT INTO `list` (`id`, `line`, `job`) VALUES
-(9, 1, 'codien'),
-(11, 2, 'codien'),
-(13, 3, 'kythuat');
-
---
--- Chỉ mục cho các bảng đã đổ
---
-
---
--- Chỉ mục cho bảng `list`
---
-ALTER TABLE `list`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT cho các bảng đã đổ
---
-
---
--- AUTO_INCREMENT cho bảng `list`
---
-ALTER TABLE `list`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+INSERT INTO `list` (`line`, `job`) VALUES
+(2, 'codien'),
+(3, 'kythuat'),
+(4, 'phulieu');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
