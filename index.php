@@ -47,21 +47,15 @@
         <?php }
         ?>
     </div>
-    <div id="list">
-        <ul>
 
-            <?php
-            require_once "DB.php";
-            $list = DB::table('list')->fetchAll();
-            foreach ($list as $l) { ?>
-                <li><?= "Chuyền $l->line : $l->job" ?></li>
-            <?php  }  ?>
-        </ul>
-    </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var intervalId;
+
+            intervalId = setInterval(() => {
+                notification()
+            }, 1000);
 
             function notification() {
                 fetch("services.php").then(res => res.json()).then(list => {
@@ -90,6 +84,7 @@
                 }
                 if (index < files.length) {
                     let audio = new Audio(files[index]);
+                    console.log(files[index]);
                     audio.play();
                     audio.onended = function() {
                         setTimeout(() => {
@@ -99,9 +94,7 @@
                 }
 
             }
-            intervalId = setInterval(() => {
-                notification()
-            }, 1000);
+
 
             // var intervalId = setInterval(function() {
             //     fetch('services.php')
