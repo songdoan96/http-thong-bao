@@ -61,42 +61,84 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            var intervalId = setInterval(function() {
-                fetch('services.php')
-                    .then(res => res.json())
-                    .then(list => {
-                        if (list.length) {
-                            clearInterval(intervalId);
-                            let playDone = false;
-                            var audioFiles = [];
-                            list.forEach(i => {
-                                let audioName = `assets/${i.line}-${i.job}.mp3`;
-                                audioFiles.push(audioName)
-                            });
+            var intervalId;
 
-                            function playAudio(files, index) {
-                                if (index == files.length) {
-                                    playDone = true;
-                                    setTimeout(() => {
-                                        location.reload();
-                                    }, 3000);
-                                    return;
-                                }
-                                if (index < files.length) {
-                                    let audio = new Audio(files[index]);
-                                    audio.play();
-                                    audio.onended = function() {
-                                        setTimeout(() => {
-                                            playAudio(files, index + 1);
-                                        }, 1000);
-                                    };
-                                }
+            function notification() {
+                fetch("services.php").then(res => res.json()).then(list => {
+                    if (list.length) {
+                        clearInterval(intervalId);
+                        let audioFiles = [];
 
-                            }
-                            playAudio(audioFiles, 0);
-                        }
-                    })
-            }, 1000)
+                        list.forEach(i => {
+                            let audioName = `assets/${i.line}-${i.job}.mp3`;
+                            audioFiles.push(audioName)
+                        });
+                        playAudio(audioFiles, 0);
+
+                    }
+                })
+            }
+
+            function playAudio(files, index) {
+                if (index == files.length) {
+                    setTimeout(() => {
+                        intervalId = setInterval(() => {
+                            notification()
+                        }, 1000);
+                    }, 2000)
+
+                }
+                if (index < files.length) {
+                    let audio = new Audio(files[index]);
+                    audio.play();
+                    audio.onended = function() {
+                        setTimeout(() => {
+                            playAudio(files, index + 1);
+                        }, 1000);
+                    };
+                }
+
+            }
+            intervalId = setInterval(() => {
+                notification()
+            }, 1000);
+
+            // var intervalId = setInterval(function() {
+            //     fetch('services.php')
+            //         .then(res => res.json())
+            //         .then(list => {
+            //             if (list.length) {
+            //                 clearInterval(intervalId);
+
+            //                 var audioFiles = [];
+            //                 list.forEach(i => {
+            //                     let audioName = `assets/${i.line}-${i.job}.mp3`;
+            //                     audioFiles.push(audioName)
+            //                 });
+
+            //                 function playAudio(files, index) {
+            //                     if (index == files.length) {
+
+            //                         setTimeout(() => {
+            //                             location.reload();
+            //                         }, 3000);
+
+            //                     }
+            //                     if (index < files.length) {
+            //                         let audio = new Audio(files[index]);
+            //                         audio.play();
+            //                         audio.onended = function() {
+            //                             setTimeout(() => {
+            //                                 playAudio(files, index + 1);
+            //                             }, 1000);
+            //                         };
+            //                     }
+
+            //                 }
+            //                 playAudio(audioFiles, 0);
+            //             }
+            //         })
+            // }, 1000)
         })
     </script>
 </body>
