@@ -48,7 +48,7 @@
         ?>
     </div>
 
-
+    <ul id="list"></ul>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var intervalId;
@@ -62,11 +62,13 @@
                     if (list.length) {
                         clearInterval(intervalId);
                         let audioFiles = [];
-
+                        let listHtml = '';
                         list.forEach(i => {
                             let audioName = `assets/${i.line}-${i.job}.mp3`;
+                            listHtml += `<li>Chuyền ${i.line} :${i.job}</li>`;
                             audioFiles.push(audioName)
                         });
+                        document.querySelector("#list").innerHTML = listHtml;
                         playAudio(audioFiles, 0);
 
                     }
@@ -76,6 +78,7 @@
             function playAudio(files, index) {
                 if (index == files.length) {
                     setTimeout(() => {
+                        document.querySelector("#list").innerHTML = "";
                         intervalId = setInterval(() => {
                             notification()
                         }, 1000);
@@ -84,7 +87,6 @@
                 }
                 if (index < files.length) {
                     let audio = new Audio(files[index]);
-                    console.log(files[index]);
                     audio.play();
                     audio.onended = function() {
                         setTimeout(() => {
